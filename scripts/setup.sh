@@ -78,11 +78,11 @@ spin() {
 
 # ── Welcome banner ────────────────────────────────────────────────
 printf "\n"
-printf "${CYAN}${BOLD}  ┌──────────────────────────────────────────┐${RESET}\n"
-printf "${CYAN}${BOLD}  │                                          │${RESET}\n"
-printf "${CYAN}${BOLD}  │${RESET}${BOLD}   AI Workflows for QE — Workshop Setup   ${CYAN}${BOLD}│${RESET}\n"
-printf "${CYAN}${BOLD}  │                                          │${RESET}\n"
-printf "${CYAN}${BOLD}  └──────────────────────────────────────────┘${RESET}\n"
+printf "${CYAN}${BOLD}  ┌──────────────────────────────────────────────────┐${RESET}\n"
+printf "${CYAN}${BOLD}  │                                                  │${RESET}\n"
+printf "${CYAN}${BOLD}  │${RESET}${BOLD}    AI-Powered QE with Cursor — Workshop Setup    ${CYAN}${BOLD}│${RESET}\n"
+printf "${CYAN}${BOLD}  │                                                  │${RESET}\n"
+printf "${CYAN}${BOLD}  └──────────────────────────────────────────────────┘${RESET}\n"
 printf "\n"
 
 # ── Check: git ────────────────────────────────────────────────────

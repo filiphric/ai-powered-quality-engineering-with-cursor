@@ -64,11 +64,11 @@ function Show-Spinner {
 
 # ── Welcome banner ────────────────────────────────────────────────
 Write-Host ""
-Write-Host "  +------------------------------------------+" -ForegroundColor Cyan
-Write-Host "  |                                          |" -ForegroundColor Cyan
-Write-Host "  |   AI Workflows for QE -- Workshop Setup  |" -ForegroundColor Cyan
-Write-Host "  |                                          |" -ForegroundColor Cyan
-Write-Host "  +------------------------------------------+" -ForegroundColor Cyan
+Write-Host "  +---------------------------------------------------+" -ForegroundColor Cyan
+Write-Host "  |                                                   |" -ForegroundColor Cyan
+Write-Host "  |    AI-Powered QE with Cursor -- Workshop Setup    |" -ForegroundColor Cyan
+Write-Host "  |                                                   |" -ForegroundColor Cyan
+Write-Host "  +---------------------------------------------------+" -ForegroundColor Cyan
 Write-Host ""
 
 # ── Check: git ────────────────────────────────────────────────────
