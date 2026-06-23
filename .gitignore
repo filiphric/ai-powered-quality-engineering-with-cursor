@@ -18,4 +18,5 @@ Icon
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
 
-slides
+# slides is now part of the repo; ignore only its deps
+slides/node_modules/
