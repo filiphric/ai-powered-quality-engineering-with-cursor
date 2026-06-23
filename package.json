@@ -7,7 +7,8 @@
     "workshop": "./bin/workshop.js"
   },
   "scripts": {
-    "start": "bash scripts/setup.sh"
+    "start": "bash scripts/setup.sh",
+    "slides": "cd slides && npm run dev"
   },
   "keywords": [
     "workshop",

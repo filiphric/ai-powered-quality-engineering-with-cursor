@@ -2,7 +2,7 @@
 layout: cover
 ---
 
-#  Cursor and Claude Code <br/> for Test automation Engineers
+#  AI-Powered Quality Engineering with Cursor
 a workshop by Filip Hric
 
 ---
@@ -17,6 +17,44 @@ image: /small_square.png
 - Workshops, presentations, webinars, courses, streaming, youtube, consultations
 
 ---
+layout: default
+---
+
+# About this workshop
+
+Use **Cursor as a structured QA assistant** — across Playwright tests, application code, and automation workflows.
+
+- Hands-on, online session (~2.5 hours)
+- Go beyond basic code generation into a repeatable QA workflow
+- The four core Cursor interaction patterns: **chat**, **tab completion**, **inline edits**, and **agents**
+
+<!-- Framing from the Eventbrite listing: "AI-Powered Quality Engineering with Cursor" — using Cursor as a structured QA assistant across Playwright tests, PRs, application code, and automation workflows. -->
+
+---
+layout: default
+---
+
+# What you'll learn
+
+- Write and improve **Playwright tests** with Cursor — test planning, coverage analysis, and debugging
+- **Context engineering** — manage project context and stay accurate in longer testing conversations
+- Teach Cursor your testing patterns and conventions with **reusable rules**
+- Build repeatable QA workflows with **skills**
+
+<!-- Mapped to the three workshop chapters: Cursor Basics, Context Engineering, Rules & Skills. -->
+
+---
+layout: default
+---
+
+# Who is this for?
+
+- QA Engineers
+- Test Automation Engineers
+- Frontend Developers
+- DevOps Engineers
+
+---
 layout: two-cols
 ---
 
@@ -26,7 +64,6 @@ layout: two-cols
 
 - Chapter overview
 - Demo
-- Practical challenge
 - Q&A continually
 
 ::right::
@@ -44,17 +81,6 @@ layout: default
 - chapter materials can be found in the repo
 - no need to code along
 - you get to keep the materials after the workshop
-
----
-layout: default
----
-
-<InstallRepo />
-
-# Workshop form - practical challenge
-- you'll find a challenge in the root folder
-- get into experimental mode
-- no need to finish the challenge
 
 ---
 layout: default
@@ -90,9 +116,8 @@ layout: default
 # Tools that we'll be using
 
 - Cursor
-- Superwhisper
 - Playwright
-- Claude Code
+
 ...and more
 
 ---
@@ -117,7 +142,6 @@ layout: default
 - Playwright resets data before test
 - App is ran automatically with Playwright
 - `npx workshop start` to run the app separately
-- `npx workshop chapter <chapter-number>` to run a specific chapter
 
 ---
 layout: default
@@ -125,37 +149,19 @@ layout: default
 
 # Workshop overview
 
-### Basic (3 hours)
+### 2.5 hours
 
-| Chapter | Time | Challenge |
-| --- | --- | --- |
-| Intro | 0:00 - 0:15 | --- |
-| #1 - Cursor Basics | 0:15 - 0:35 | 0:35 - 0:55 |
-| #2 - Claude Code | 0:55 - 1:15 | 1:15 - 1:35 |
-| Short break | 1:35 - 1:50 | --- |
-| #3 - MCP | 1:50 - 2:10 | 2:10 - 2:30 |
-| #4 - Rules and Skills | 2:30 - 2:50 | 2:50 - 3:10 |
-
----
-layout: default
----
-
-# Workshop overview
-
-### Advanced (3 hours)
-
-| Chapter | Time | Challenge |
-| --- | --- | --- |
-| Intro | 0:00 - 0:15 | --- |
-| #5 - Context Engineering | 0:15 - 0:35 | 0:35 - 0:55 |
-| #6 - Workflow Building | 0:55 - 1:15 | 1:15 - 1:35 |
-| Short break | 1:35 - 1:50 | --- |
-| #7 - Testing skills | 1:50 - 2:10 | 2:10 - 2:30 |
-| #8 - AI reviews | 2:30 - 2:50 | 2:50 - 3:10 |
+| Chapter | Time |
+| --- | --- |
+| Intro | 0:00 - 0:15 |
+| #1 - Cursor Basics | 0:15 - 0:55 |
+| #2 - Context Engineering | 0:55 - 1:35 |
+| Short break | 1:35 - 1:45 |
+| #3 - Rules & Skills | 1:45 - 2:30 |
 
 ---
 layout: cover
 ---
 
-#  Effective AI Workflows <br/> for Quality Engineers
+#  AI-Powered Quality Engineering <br/> with Cursor
 a workshop by Filip Hric

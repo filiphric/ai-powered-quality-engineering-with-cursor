@@ -11,15 +11,18 @@ layout: default
 
 # What you'll learn
 
-**Rules**
-- What types of rules there are
-- How to create and generate rules
+**Rules & files**
+- AGENTS.md / CLAUDE.md files — and what the research says
+- What types of rules there are, how to create them
 - Recommendations
+
+**Repeatable workflows**
+- Commands / workflows / agents that pull rules, skills and tools together
 
 **Skills**
 - What skills are and how they differ from rules
-- How to create your own skill, pass arguments, add supporting scripts
-- The skills registry (skills.sh) + the playwright-cli skill
+- How to create your own skill, add supporting scripts, the skills registry
+- Installing safely + the playwright-cli skill
 
 ---
 layout: cover
@@ -53,6 +56,81 @@ layout: default
 - Claude uses CLAUDE.md and Cursor uses AGENT.md files
 - AGENTS.md is an effort to unify basic instructions for users so that if within your team some people use Cursor, some use Windsurf, they can all have a common starting point
 - they are stubborn, but you can create symlinks between them
+-->
+
+---
+layout: default
+---
+
+# What these files look like
+
+<SlidevVideo autoplay>
+  <source src="/video/claude-md.webm" type="video/webm" />
+</SlidevVideo>
+
+<!-- 
+- These files are sent along with your prompt when you work with Cursor, Claude Code, Codex, or other AI agents.
+- They have become a standard over the past couple of months. And many people chose to add them to their projects.
+- many tools such as Claude Code enable you to create a CLAUDE.md file using a /init command
+- it will scan your repository, create a summary and create the file for you
+- However, I would advise against this
+-->
+
+---
+layout: default
+---
+
+# What the research says
+
+<SlidevVideo autoplay>
+  <source src="/video/agent-files.webm" type="video/webm" />
+</SlidevVideo>
+
+<!--
+- a recent study shows a 3% performance decrease in tasks done by AI agents on repositories that contain AGENTS.md, over those that don't.
+- This made headlines recently, people started deleting those files
+-->
+
+---
+layout: default
+---
+
+# ...but it depends who wrote it
+
+<SlidevVideo autoplay>
+  <source src="/video/agent-files-decrease.webm" type="video/webm" />
+</SlidevVideo>
+
+<!--
+- but the study says some other things as well
+- On average, a 4% performance improvement was measured in those projects where AGENTS.md files were created by humans
+- the thing is, when you let AI do the scanning for you, it's like letting someone who never used the repository write a summary for you
+- it's fair to say that the AGENTS.md concept is not perfect.
+- It needs constant updates, because it rots like documentation.
+- Some tools make their own choices on when to include these files.
+- And they can potentially introduce noise to the context window. Which is probably the main reason for that 3% performance decrease.
+-->
+
+---
+layout: default
+---
+
+# My advice
+
+<v-clicks>
+
+- keep the file lean
+- skip the basic stuff
+- include custom conventions
+
+</v-clicks>
+
+<!--
+- my advice
+- keep the file lean
+- Your AGENTS.md file should not contain things like "npm run dev" or other scripts that an average AI agent can read in your package.json.
+- It is a place for things like custom project conventions, non-obvious architectural decisions, and business logic quirks.
+- Think about all the things that confuse your new colleagues. Things that you only learn after months of working on a project.
 -->
 
 ---
@@ -228,7 +306,63 @@ layout: default
 layout: cover
 ---
 
-# Part 2 — Skills
+# Part 2 — Repeatable Workflows
+
+---
+layout: default
+---
+
+# Commands,
+<div class="-mt-8"/>
+
+# Workflows,
+<div class="-mt-8"/>
+
+# Agents
+
+<!-- 
+- I'm grouping these together, because different tools have different names for this
+- essentially I'm talking about repeatable workflows or sets of steps that your agent is able to follow
+- they allow you to combine repeatability with fuzziness of AI
+- commands are one of my favourite use cases for agents, and chances are, if you're doing automation that they will be favourite for you too
+-->
+
+---
+layout: default
+---
+
+<SlidevVideo autoplay>
+  <source src="/video/claude-command.webm" type="video/webm" />
+</SlidevVideo>
+
+<!-- 
+- a typical use case would be - write an end-to-end test for this ticket
+- an agent is able to digest a set of steps, it can pull rules, skills, mcps and all the tools needed together, to complete a certain task
+- they can fire sub-agents to complete partial tasks, e.g. that fetching of the info from a ticket could be a separate task
+- commands or agents pull together all of the things we have talked about
+- one of the things I personally like to do is to let a subagent figure out the react components that I'm interacting with through my e2e tests. if a proper selector is missing, the agent is instructed to add the data-test-id property
+-->
+
+---
+layout: default
+---
+
+<SlidevVideo autoplay>
+  <source src="/video/agent-browser.webm" type="video/webm" />
+</SlidevVideo>
+
+<!-- 
+- the way I usually create agents as command is that I first go with my agent manually
+- when writing an e2e test, I either use playwright-cli, or lately I have been using agent-browser from vercel for this and actually use claude code or cursor to go step by step
+- once I'm happy with all the steps, I tell claude to summarize what we just did into a markdown file
+- that file will then become a blueprint for the repeatable workflow
+-->
+
+---
+layout: cover
+---
+
+# Part 3 — Skills
 
 ---
 layout: center
@@ -355,6 +489,23 @@ npx skills add https://github.com/microsoft/playwright-cli \
 - once installed, the skill folder lands in your project and Claude picks it up immediately
 - worth pointing out: Anthropic also publishes skills there - frontend-design, pptx, docx, pdf are all in the top 100
 
+-->
+
+---
+layout: default
+---
+
+# Install with care
+
+- be wary of "best practices" / "use 50% fewer tokens" skills — that's prompt-engineering territory
+- **read every skill you add** — they run with your agent's permissions
+- a skill can carry **prompt injection** — only install from sources you trust
+
+<!--
+- there's now a library of skills available at skills.sh - npx skills add for any agent
+- but I'd be wary of downloading too many skills or adding skills such as "best practices" to your projects - this is once again "prompt engineering" territory, where you might find people claiming a skill reduces token usage by 50% or makes no mistakes
+- more importantly, you need to read the skills you are adding to your project, because they may introduce prompt injection
+- if you are downloading skills, make sure they come from a source you trust
 -->
 
 ---

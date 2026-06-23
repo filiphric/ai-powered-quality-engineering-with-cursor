@@ -10,10 +10,96 @@ layout: default
 ---
 # What you'll learn
 
+- How LLMs actually work (a mental model)
 - What is the context window
 - What context engineering
 - Why long conversations hurt performance
 - How to keep your agent smart
+
+---
+layout: default
+---
+
+# How do LLMs work?
+
+<!--
+- let's start off by answering a question - how do LLMs work
+- get a good mental model
+- the thing about AI is that it has this mythical property to it, we give it human like properties - intelligence, creativity, reasoning, problem solving, etc.
+- I think this really muddies the waters, and I believe it's important to get a proper understanding what AI is, and where it's true power lies
+- a large language model (LLM) is a model trained to predict and generate text by learning patterns from massive datasets
+- textbook definition, not really helpful for getting a good mental model
+- let's do something better - explain it like to my mom
+-->
+
+---
+layout: default
+title: sequence (numbers)
+---
+
+## finish the sequence
+
+<div class="text-6xl block mt-12">
+1, 3, 5, 7, 9, 11, 13, <span v-click=[0,1] class="inline-block">...</span><span v-click at="[1,1]" class="-ml-12 inline-block">15</span>
+</div>
+
+---
+---
+
+<div class="text-6xl">
+output = <span v-mark="{ color: '#F48487', type: 'circle' }">2n - 1</span>
+</div>
+
+<!-- 
+- If we were to create a program that would be able to output an odd number it could have two parameters
+- the key thing to understand: parameters are just numbers, not concepts. The model doesn't understand what it's doing - it doesn't understand the concept of odd numbers — it has found numerical values that happen to produce the right answers.
+- let's take this mental model and translate it to something more complicated
+-->
+
+---
+title: sequence (colors)
+---
+
+## finish the sequence
+<div class="text-6xl block mt-12 leading-tight">
+red, orange, yellow, green, blue, <span v-click=[0,1] class="inline-block">...</span><span v-click at="[1,1]" class="-ml-7 inline-block">indigo, violet</span>
+</div>
+
+<!-- 
+indigo, violet)
+- these are colors of the rainbow
+- our previous formula is not going to work, we cannot express it in the same way
+- instead, we now need to add more parameters, so that we are able to finish the sequence properly and not say "blue sky"
+- this requires training data, and much more parameters, but if we were scale that up to let's say
+  - 1.5 billion parameters → can write basic text just as GPT-2 can
+  - Claude/GPT-4 class: hundreds of billions of parameters → can reason, code, translate, etc.
+- Each parameter on its own is just a number. But billions of them working together across layers of a neural network produce what looks like understanding.
+-->
+
+---
+layout: default
+title: sequence (conversation)
+---
+
+<div class="grid grid-cols-1">
+  <div class="text-4xl block">Q: What's the Capital of Slovakia?</div>
+  <div class="text-4xl block" v-click="[0,1]">A: ...</div>
+  <div class="text-4xl block -mt-7" v-click="1">A: Bratislava</div>
+  <div class="h-8"></div>
+  <div class="text-4xl block" v-click="2">Q: What to look for in life partner?</div>
+  <div class="text-4xl block" v-click="[2,3]">A: ...</div>
+  <div class="text-4xl block -mt-7" v-click="3">A: Low expectations</div>
+</div>
+
+<!-- 
+- so for example you can teach the model how a conversation looks like
+- example:
+  - if you ask it for a factual information, it will be able to answer correctly
+  - and if you start to have more complex conversations, it will be able to give you the right answer
+- of course, there are many other important concepts that go into creating something like chatgpt, but I don't want to spend too much time on this
+- the important part, is that this is how barebones LLM looks like
+- the mental model is, that you start a sequence, and the LLM is able to finish it
+-->
 
 ---
 layout: two-cols
