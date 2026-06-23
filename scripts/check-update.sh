@@ -113,24 +113,6 @@ check_for_update() {
     fi
   fi
 
-  # Update all chapter branches from remote
-  local chapter_branches=(
-    "chapter/01-cursor-basics"
-    "chapter/02-rules"
-    "chapter/03-skills"
-    "chapter/04-context-engineering"
-    "chapter/05-workflow-building"
-    "chapter/06-ai-code-governance"
-  )
-
-  printf "  ${DIM}Updating chapter branches...${RESET}\n"
-  git -C "$root" fetch origin --quiet
-  for branch in "${chapter_branches[@]}"; do
-    if git -C "$root" rev-parse --verify "origin/$branch" &>/dev/null; then
-      git -C "$root" branch -f "$branch" "origin/$branch" &>/dev/null || true
-    fi
-  done
-
   # Reinstall dependencies in case they changed
   local app_path="$root/trelloapp"
   if [ -f "$app_path/package.json" ] && [ -d "$app_path/node_modules" ]; then

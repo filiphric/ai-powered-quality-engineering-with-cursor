@@ -56,32 +56,13 @@ The app runs at **http://localhost:3000** with the API on **http://localhost:300
 
 ## Workshop chapters
 
-The workshop is split into chapters. Each chapter is a git branch that builds on the previous one.
+The workshop runs as a single linear flow on the `main` branch, split into three chapters. Speaker notes for each chapter live in the [`notes/`](./notes) folder, and the hands-on exercises are in [`CHALLENGE.md`](./CHALLENGE.md).
 
-| # | Chapter | Branch | What you'll learn |
-|---|---------|--------|-------------------|
-| 1 | Cursor Basics | `chapter/01-cursor-basics` | Use Cursor's chat, tab completion, and inline edits to write Playwright tests with proper selectors |
-| 2 | Rules | `chapter/02-rules` | Create and organize rules with different trigger types to guide AI agent behavior |
-| 3 | Skills | `chapter/03-skills` | Build reusable skills with SKILL.md, add supporting scripts, and use the skills registry |
-| 4 | Context Engineering | `chapter/04-context-engineering` | Manage context windows effectively and keep conversations focused for best model performance |
-| 5 | Workflow Building | `chapter/05-workflow-building` | Orchestrate agents with forked subagents and scoped MCP servers to automate complex workflows |
-| 6 | AI code governance | `chapter/06-ai-code-governance` | Enforce team coding standards on PRs using AI-powered code review with rules and context-aware agents |
-
-### Switching chapters
-
-To jump to a chapter, run:
-
-```bash
-npx workshop chapter <number>
-```
-
-For example, to start chapter 3:
-
-```bash
-npx workshop chapter 3
-```
-
-This will automatically stash any uncommitted changes and switch to the correct branch. Each chapter branch contains the completed state of all previous chapters, so you can jump in at any point.
+| # | Chapter | What you'll learn |
+|---|---------|-------------------|
+| 1 | Cursor Basics | Use Cursor's chat, tab completion, and inline edits to write Playwright tests with proper selectors |
+| 2 | Context Engineering | Manage context windows effectively and keep conversations focused for best model performance |
+| 3 | Rules & Skills | Create rules with different trigger types, and build reusable skills with SKILL.md, supporting scripts, and the skills registry |
 
 ## Script commands
 
@@ -94,7 +75,6 @@ Use the setup script throughout the workshop:
 | `npx workshop reset` | Reset the database to a clean state |
 | `npx workshop check` | Check if ports 3000 & 3001 are free |
 | `npx workshop verify` | Verify that everything is set up correctly |
-| `npx workshop chapter <n>` | Switch to a chapter branch |
 
 ## Troubleshooting
 

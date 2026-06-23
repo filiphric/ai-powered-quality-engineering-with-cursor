@@ -2,9 +2,8 @@
 layout: cover
 ---
 
-Chapter #4:
+Chapter #2:
 # Context Engineering
-`npx workshop chapter 4`
 
 ---
 layout: default

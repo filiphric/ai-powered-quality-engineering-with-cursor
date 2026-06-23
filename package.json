@@ -7,8 +7,7 @@
     "workshop": "./bin/workshop.js"
   },
   "scripts": {
-    "start": "bash scripts/setup.sh",
-    "chapter": "bash scripts/chapter.sh"
+    "start": "bash scripts/setup.sh"
   },
   "keywords": [
     "workshop",

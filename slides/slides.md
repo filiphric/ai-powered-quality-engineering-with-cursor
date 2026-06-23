@@ -28,7 +28,7 @@ src: ./pages/challenge.md
 ---
 
 ---
-src: ./pages/02_rules.md
+src: ./pages/02_context_engineering.md
 ---
 
 ---
@@ -36,35 +36,7 @@ src: ./pages/challenge.md
 ---
 
 ---
-src: ./pages/03_skills.md
----
-
----
-src: ./pages/challenge.md
----
-
----
-src: ./pages/intro.md
----
-
----
-src: ./pages/04_context_engineering.md
----
-
----
-src: ./pages/challenge.md
----
-
----
-src: ./pages/05_workflow_building.md
----
-
----
-src: ./pages/challenge.md
----
-
----
-src: ./pages/06_ai_code_governance.md
+src: ./pages/03_rules_and_skills.md
 ---
 
 ---

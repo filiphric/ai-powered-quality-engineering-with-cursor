@@ -4,7 +4,6 @@ layout: cover
 
 Chapter #1:
 # Cursor basics
-`npx workshop chapter 1`
 
 ---
 layout: default
