@@ -1,0 +1,22 @@
+{
+  "name": "ai-powered-quality-engineering-with-cursor",
+  "version": "1.0.0",
+  "description": "A hands-on workshop on writing effective tests using AI-powered workflows.",
+  "main": "index.js",
+  "bin": {
+    "workshop": "./bin/workshop.js"
+  },
+  "scripts": {
+    "start": "bash scripts/setup.sh",
+    "chapter": "bash scripts/chapter.sh"
+  },
+  "keywords": [
+    "workshop",
+    "ai",
+    "qa",
+    "testing"
+  ],
+  "author": "Filip Hric",
+  "license": "ISC",
+  "type": "commonjs"
+}

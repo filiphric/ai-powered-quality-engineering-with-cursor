@@ -1,0 +1,15 @@
+node_modules
+cli/node_modules
+.DS_Store
+dist
+dist-ssr
+*.local
+.vscode
+backend/data/uploaded/*
+.env
+.vscode/*
+
+!/**/.gitkeep
+test-results/
+playwright-report/
+blob-report/
