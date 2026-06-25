@@ -566,3 +566,17 @@ layout: default
 - once I'm happy with all the steps, I tell claude to summarize what we just did into a markdown file
 - that file will then become a blueprint for the repeatable workflow
 -->
+
+---
+layout: center
+---
+
+# Demo
+## Part 3 — Workflow Building
+
+<!-- 
+- page object model workflow, refer the selector rule
+- install commit and push skill
+- review locally with Qodo
+- pr skills from Qodo
+-->
