@@ -35,7 +35,7 @@ check_for_update() {
 
   if command -v curl &>/dev/null; then
     remote_version=$(curl -fsSL --connect-timeout 3 --max-time 5 "$api_url" 2>/dev/null \
-      | grep '"tag_name"' | head -1 | sed 's/.*"tag_name"[[:space:]]*:[[:space:]]*"v\{0,1\}\([^"]*\)".*/\1/')
+      | grep '"tag_name"' | head -1 | sed 's/.*"tag_name"[[:space:]]*:[[:space:]]*"v\{0,1\}\([^"]*\)".*/\1/' || true)
   elif command -v node &>/dev/null; then
     remote_version=$(node -e "
       const https = require('https');
@@ -49,7 +49,7 @@ check_for_update() {
       });
       req.on('error', () => {});
       req.on('timeout', () => req.destroy());
-    " 2>/dev/null)
+    " 2>/dev/null || true)
   fi
 
   # If we couldn't fetch the remote version, skip silently
@@ -64,7 +64,7 @@ check_for_update() {
 
   # Simple semver comparison using sort -V (available on macOS & Linux)
   local higher
-  higher=$(printf '%s\n%s\n' "$local_version" "$remote_version" | sort -V | tail -1)
+  higher=$(printf '%s\n%s\n' "$local_version" "$remote_version" | sort -V 2>/dev/null | tail -1 || printf '%s' "$remote_version")
   if [ "$higher" = "$local_version" ]; then
     # Local is newer or equal — nothing to do
     return 0
@@ -81,7 +81,7 @@ check_for_update() {
   printf "${YELLOW}${BOLD}  └──────────────────────────────────────────┘${RESET}\n"
   printf "\n"
   printf "  ${BOLD}Update now? (Y/n)${RESET} "
-  read -r DO_UPDATE
+  read -r DO_UPDATE || DO_UPDATE=""
   if [[ "$DO_UPDATE" =~ ^[Nn]$ ]]; then
     return 0
   fi

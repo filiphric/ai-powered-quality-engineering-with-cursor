@@ -20,45 +20,19 @@ image: /small_square.png
 layout: default
 ---
 
-# About this workshop
-
-Use **Cursor as a structured QA assistant** — across Playwright tests, application code, and automation workflows.
-
-- Hands-on, online session (~2.5 hours)
-- Go beyond basic code generation into a repeatable QA workflow
-- The four core Cursor interaction patterns: **chat**, **tab completion**, **inline edits**, and **agents**
-
-<!-- Framing from the Eventbrite listing: "AI-Powered Quality Engineering with Cursor" — using Cursor as a structured QA assistant across Playwright tests, PRs, application code, and automation workflows. -->
-
----
-layout: default
----
-
 # What you'll learn
 
-- Write and improve **Playwright tests** with Cursor — test planning, coverage analysis, and debugging
-- **Context engineering** — manage project context and stay accurate in longer testing conversations
+- Write and improve **Playwright tests** with Cursor
+- **Context engineering** — manage project context and stay accurate in longer
 - Teach Cursor your testing patterns and conventions with **reusable rules**
 - Build repeatable QA workflows with **skills**
 
-<!-- Mapped to the three workshop chapters: Cursor Basics, Context Engineering, Rules & Skills. -->
-
----
-layout: default
----
-
-# Who is this for?
-
-- QA Engineers
-- Test Automation Engineers
-- Frontend Developers
-- DevOps Engineers
+... and more
 
 ---
 layout: two-cols
 ---
 
-<InstallRepo />
 
 # Workshop form
 
@@ -73,7 +47,6 @@ layout: two-cols
 layout: default
 ---
 
-<InstallRepo />
 
 # Workshop form - demos
 
@@ -86,7 +59,6 @@ layout: default
 layout: default
 ---
 
-<InstallRepo />
 
 # Workshop form - Q&A
 - Q&A continually
@@ -98,7 +70,6 @@ layout: default
 layout: default
 ---
 
-<InstallRepo />
 
 # Workshop requirements
 
@@ -111,7 +82,6 @@ layout: default
 layout: default
 ---
 
-<InstallRepo />
 
 # Tools that we'll be using
 
@@ -124,7 +94,6 @@ layout: default
 layout: default
 ---
 
-<InstallRepo />
 
 # App under test
 
@@ -134,7 +103,6 @@ layout: default
 layout: default
 ---
 
-<InstallRepo />
 
 # Extensions
 - In tools, type "Show recommended extensions"
@@ -158,10 +126,3 @@ layout: default
 | #2 - Context Engineering | 0:55 - 1:35 |
 | Short break | 1:35 - 1:45 |
 | #3 - Rules & Skills | 1:45 - 2:30 |
-
----
-layout: cover
----
-
-#  AI-Powered Quality Engineering <br/> with Cursor
-a workshop by Filip Hric

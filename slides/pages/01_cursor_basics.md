@@ -128,4 +128,12 @@ Inline edits work really well if you want to:
 
 > 💡 Tip: You can use arrow up to go back to the previous message. 
 
+## Part #4 - Show agents
+
+## Part #5 - Show terminal
+
+## Part #6 - Show images
+
+## Part #7 - Show browser
+
 -->

@@ -50,9 +50,27 @@ title: sequence (numbers)
 output = <span v-mark="{ color: '#F48487', type: 'circle' }">2n - 1</span>
 </div>
 
+<div v-click class="mt-20">
+  <div class="text-2xl opacity-70 mb-8">Text works the same way — words are split into <strong>tokens</strong>, and each token is just a number:</div>
+  <div class="flex gap-4 justify-center items-start font-mono">
+    <div class="flex flex-col items-center gap-3">
+      <div class="text-4xl px-5 py-3 rounded-lg bg-[#F48487]/20 border-2 border-[#F48487]">Play</div>
+      <div class="text-2xl opacity-60">11002</div>
+    </div>
+    <div class="flex flex-col items-center gap-3">
+      <div class="text-4xl px-5 py-3 rounded-lg bg-[#00B6B1]/20 border-2 border-[#00B6B1]">wright</div>
+      <div class="text-2xl opacity-60">29427</div>
+    </div>
+  </div>
+</div>
+
 <!-- 
-- If we were to create a program that would be able to output an odd number it could have two parameters
-- the key thing to understand: parameters are just numbers, not concepts. The model doesn't understand what it's doing - it doesn't understand the concept of odd numbers — it has found numerical values that happen to produce the right answers.
+- If we were to represent our sequence with a formula it could have two parameters
+- when we want to represent something much more complicated, like a sentence we need much more parameters
+- the key difference between a formula like this and an LLM: parameters are just numbers, not concepts. The model doesn't understand what it's doing - it doesn't understand the concept of odd numbers — it has found numerical values that happen to produce the right answers.
+- [click] now connect it to language: the model never sees letters or words — text is first broken into tokens, often sub-word chunks like "Play" + "wright"
+- each token maps to a number (its ID in the vocabulary), and the model only ever works with these numbers
+- so just like our 2n - 1 formula turns numbers into numbers, the LLM turns token-numbers into token-numbers — there's no "understanding of words" underneath, just math over numeric IDs
 - let's take this mental model and translate it to something more complicated
 -->
 
@@ -74,6 +92,31 @@ indigo, violet)
   - 1.5 billion parameters → can write basic text just as GPT-2 can
   - Claude/GPT-4 class: hundreds of billions of parameters → can reason, code, translate, etc.
 - Each parameter on its own is just a number. But billions of them working together across layers of a neural network produce what looks like understanding.
+-->
+
+---
+layout: default
+title: meaning space (embeddings)
+---
+
+# Meaning space
+
+<div class="relative h-80 mt-2 border-2 border-gray-300/40 rounded-lg">
+  <span class="absolute text-2xl" style="left: 8%; top: 20%; color: #F48487">red</span>
+  <span class="absolute text-2xl" style="left: 16%; top: 38%; color: #F48487">orange</span>
+  <span class="absolute text-2xl" style="left: 6%; top: 56%; color: #F48487">crimson</span>
+  <span class="absolute text-2xl" style="left: 70%; top: 24%; color: #00B6B1">blue</span>
+  <span class="absolute text-2xl" style="left: 80%; top: 42%; color: #00B6B1">teal</span>
+  <span class="absolute text-2xl" style="left: 66%; top: 60%; color: #00B6B1">navy</span>
+  <span class="absolute text-2xl opacity-50" style="left: 40%; top: 78%">banana</span>
+</div>
+
+<!-- 
+- so how does the model "know" red and orange belong together? every token isn't just one number — it's a long list of numbers, a position in a high-dimensional space we call an embedding
+- the key intuition: words that mean similar things end up close together in that space. reds cluster over here, blues cluster over there
+- "banana" is way off on its own — different meaning, distant position
+- this is learned, not programmed — from billions of examples the model places every word so that distance ≈ difference in meaning
+- (real embeddings have hundreds or thousands of dimensions; this is a flattened 2D picture of the same idea)
 -->
 
 ---
@@ -249,35 +292,24 @@ layout: center
 
 <!--
 
-## Example 1 
-- show context indicators in Cursor
-- show statusline in Claude Code
-- show /context
-- install MCP and show /context
-
-```
-claude mcp add playwright npx @playwright/mcp@latest
-```
-
-## Example 2
+## Example 1
 https://code.claude.com/docs/en/context-window#explore-the-context-window
 
+## Example 2 
+- show context indicators in Cursor
+
+## Example 3 — subagents in Cursor
+- the point: a subagent runs in its OWN context window, does messy work, and reports back a clean summary — keeps the main chat in the smart zone
+- demo a "documentation" subagent for Playwright:
+  1. takes an existing Playwright test (e.g. tests/board.spec.ts)
+  2. copies it to a temp folder (e.g. .tmp/docs-run/)
+  3. adds strategic waits + page.screenshot() calls at each key step of the flow
+  4. runs the modified test (npx playwright test .tmp/docs-run/...)
+  5. moves the captured screenshots into docs/<flow-name>/
+  6. writes a markdown file documenting the flow the user asked for (steps + embedded screenshots)
+- ask for a specific flow, e.g. "document the create-a-card flow"
+- callback to the chapter: all the temp-file churn, test output, and screenshot wrangling stays in the subagent's context — the main thread only sees the final docs/ output
+
+https://cursor.com/docs/subagents
 -->
 
----
-layout: default
----
-# Summary
-
-- Prompt engineering is about words; **context engineering is about information**
-- LLMs are stateless — every turn re-reads the whole history
-- Long contexts cause real performance degradation
-- Stay in the **smart zone**: shorter, focused conversations
-- Use instruction files to carry project knowledge across sessions
-
-<!--
-- Context engineering is one of the highest-leverage skills for anyone working with AI agents
-- You don't need to find magic prompts — you need to manage what the model knows and how long it's been running
-- The patterns we've covered today apply to Cursor, Claude Code, and any other agent you work with
-- In the next chapter we'll build the other side of this: the instruction files that let your agent start every session already knowing your project
--->

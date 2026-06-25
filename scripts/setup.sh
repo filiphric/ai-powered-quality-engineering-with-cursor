@@ -76,6 +76,16 @@ spin() {
   return $?
 }
 
+WORKSHOP_COMMAND="${1:-}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# shellcheck source=workshop-app.sh
+source "$SCRIPT_DIR/workshop-app.sh"
+
+if [[ "$WORKSHOP_COMMAND" =~ ^(start|reset|check|verify)$ ]]; then
+  run_workshop_command "$WORKSHOP_COMMAND"
+  exit 0
+fi
+
 # ── Welcome banner ────────────────────────────────────────────────
 printf "\n"
 printf "${CYAN}${BOLD}  ┌──────────────────────────────────────────────────┐${RESET}\n"
@@ -155,10 +165,9 @@ fi
 success "npm v$(npm -v) found"
 
 # ── Check for workshop updates ──────────────────────────────────
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 if [ -f "$SCRIPT_DIR/check-update.sh" ]; then
   source "$SCRIPT_DIR/check-update.sh"
-  check_for_update
+  check_for_update || true
 fi
 
 # ── Check: claude code ───────────────────────────────────────────
@@ -170,7 +179,7 @@ else
   printf "  Claude Code is required for this workshop.\n"
   printf "\n"
   printf "  ${BOLD}Install Claude Code now? (Y/n)${RESET} "
-  read -r INSTALL_CLAUDE
+  read -r INSTALL_CLAUDE || INSTALL_CLAUDE=""
   if [[ ! "$INSTALL_CLAUDE" =~ ^[Nn]$ ]]; then
     if [ "$PLATFORM" = "windows" ]; then
       info "On Windows, the recommended install method is PowerShell:"
@@ -276,7 +285,7 @@ if [ "$NETWORK_OK" = false ]; then
   printf "  need to ask IT to allowlist the URLs above.\n"
   printf "\n"
   printf "  ${BOLD}Continue anyway? (y/N)${RESET} "
-  read -r CONTINUE
+  read -r CONTINUE || CONTINUE=""
   if [[ ! "$CONTINUE" =~ ^[Yy]$ ]]; then
     need_help
     exit 1
@@ -299,18 +308,18 @@ else
   printf "\n"
   printf "  ${BOLD}Where should we set up the project?${RESET}\n"
   printf "  ${DIM}(default: ${DEFAULT_DIR})${RESET} "
-  read -r DIR_NAME
+  read -r DIR_NAME || DIR_NAME=""
   DIR_NAME="${DIR_NAME:-$DEFAULT_DIR}"
 
   if [ -d "$DIR_NAME" ]; then
     warn "Directory '${DIR_NAME}' already exists"
     printf "  ${BOLD}Overwrite it? (y/N)${RESET} "
-    read -r OVERWRITE
+    read -r OVERWRITE || OVERWRITE=""
     if [[ "$OVERWRITE" =~ ^[Yy]$ ]]; then
       rm -rf "$DIR_NAME"
     else
       printf "  ${BOLD}Enter a different name:${RESET} "
-      read -r DIR_NAME
+      read -r DIR_NAME || DIR_NAME=""
       if [ -z "$DIR_NAME" ]; then
         error "No directory name provided"
         exit 1
@@ -385,198 +394,13 @@ show_menu() {
   printf "  ${BOLD}Choose an option (1-5):${RESET} "
 }
 
-port_in_use() {
-  local port=$1
-  if [ "$PLATFORM" = "windows" ]; then
-    netstat -ano 2>/dev/null | grep -q "[:.]${port} .*LISTENING"
-  elif command -v lsof &>/dev/null; then
-    lsof -i :"$port" &>/dev/null
-  elif command -v ss &>/dev/null; then
-    ss -tlnp 2>/dev/null | grep -q ":${port} "
-  else
-    # Fallback: use Node.js to test the port
-    ! node -e "
-      const net = require('net');
-      const s = net.createServer();
-      s.once('error', () => process.exit(1));
-      s.listen($port, () => { s.close(); process.exit(0); });
-    " 2>/dev/null
-  fi
-}
-
-get_port_pid() {
-  local port=$1
-  if [ "$PLATFORM" = "windows" ]; then
-    netstat -ano 2>/dev/null | grep "[:.]${port} .*LISTENING" | awk '{print $NF}' | head -1
-  elif command -v lsof &>/dev/null; then
-    lsof -t -i :"$port" 2>/dev/null | head -1
-  elif command -v ss &>/dev/null; then
-    ss -tlnp 2>/dev/null | grep ":${port} " | sed -n 's/.*pid=\([0-9]*\).*/\1/p' | head -1
-  fi
-}
-
-kill_port_process() {
-  local pid=$1
-  if [ "$PLATFORM" = "windows" ]; then
-    taskkill //F //PID "$pid" &>/dev/null
-  else
-    kill "$pid" 2>/dev/null
-  fi
-}
-
-start_app() {
-  # Check if ports are free first
-  local ports_busy=false
-
-  for port in $APP_PORT $API_PORT; do
-    if port_in_use "$port"; then
-      warn "Port $port is already in use"
-      ports_busy=true
-    fi
-  done
-
-  if [ "$ports_busy" = true ]; then
-    printf "  ${BOLD}Free the ports first? (y/N)${RESET} "
-    read -r FREE_PORTS
-    if [[ "$FREE_PORTS" =~ ^[Yy]$ ]]; then
-      for port in $APP_PORT $API_PORT; do
-        local pid
-        pid=$(get_port_pid "$port")
-        if [ -n "$pid" ]; then
-          kill_port_process "$pid" && success "Freed port $port (killed PID $pid)" || warn "Could not kill PID $pid"
-        fi
-      done
-      sleep 1
-    fi
-  fi
-
-  info "Starting the application..."
-  printf "  ${DIM}App:     http://localhost:${APP_PORT}${RESET}\n"
-  printf "  ${DIM}API:     http://localhost:${API_PORT}${RESET}\n"
-  printf "  ${DIM}Press Ctrl+C to stop${RESET}\n"
-  printf "\n"
-
-  cd "$APP_PATH" && npm start
-}
-
-reset_app() {
-  info "Resetting application database..."
-
-  # Reset the database file to its initial state
-  local DB_FILE="$APP_PATH/backend/data/database.json"
-  if [ -f "$DB_FILE" ]; then
-    cat > "$DB_FILE" <<'EOF'
-{
-  "boards": [],
-  "cards": [],
-  "lists": [],
-  "users": []
-}
-EOF
-    success "Database reset to empty state"
-  else
-    error "Database file not found at $DB_FILE"
-  fi
-
-  # Clear uploaded files
-  local UPLOAD_DIR="$APP_PATH/backend/data/uploaded"
-  if [ -d "$UPLOAD_DIR" ]; then
-    for f in "$UPLOAD_DIR"/*; do
-      [ -f "$f" ] && [ "$(basename "$f")" != ".gitkeep" ] && rm -f "$f"
-    done
-    success "Uploaded files cleared"
-  fi
-}
-
-check_ports() {
-  printf "\n"
-  for port in $APP_PORT $API_PORT; do
-    if port_in_use "$port"; then
-      local pid
-      pid=$(get_port_pid "$port")
-      if [ -n "$pid" ]; then
-        warn "Port $port is in use (PID $pid)"
-      else
-        warn "Port $port is in use"
-      fi
-    else
-      success "Port $port is free"
-    fi
-  done
-}
-
-verify_setup() {
-  printf "\n"
-  info "Verifying setup..."
-
-  local all_ok=true
-
-  # Check node_modules
-  if [ -d "$APP_PATH/node_modules" ]; then
-    success "node_modules installed"
-  else
-    error "node_modules missing — run option 1 or 'cd $APP_DIR && npm install'"
-    all_ok=false
-  fi
-
-  # Check .env
-  if [ -f "$APP_PATH/.env" ]; then
-    success ".env file exists"
-  else
-    error ".env file missing"
-    all_ok=false
-  fi
-
-  # Check database file
-  if [ -f "$APP_PATH/backend/data/database.json" ]; then
-    success "Database file exists"
-  else
-    error "Database file missing"
-    all_ok=false
-  fi
-
-  # Check ports
-  check_ports
-
-  if [ "$all_ok" = true ]; then
-    printf "\n"
-    success "Everything looks good!"
-  else
-    printf "\n"
-    warn "Some checks failed — see errors above"
-  fi
-}
-
-# ── Parse command-line flags ─────────────────────────────────────
-case "${1:-}" in
-  start)
-    start_app
-    exit 0
-    ;;
-  reset)
-    reset_app
-    exit 0
-    ;;
-  check)
-    check_ports
-    exit 0
-    ;;
-  verify)
-    verify_setup
-    exit 0
-    ;;
-  *)
-    # Fall through to interactive menu
-    ;;
-esac
-
 # ── Interactive menu loop ────────────────────────────────────────
 printf "\n"
 success "Setup complete!"
 
 while true; do
   show_menu
-  read -r CHOICE
+  read -r CHOICE || CHOICE=""
   case "$CHOICE" in
     1) start_app ;;
     2) reset_app ;;
