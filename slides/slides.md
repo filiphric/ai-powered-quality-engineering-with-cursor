@@ -23,3 +23,7 @@ src: ./pages/02_context_engineering.md
 ---
 src: ./pages/03_rules_and_skills.md
 ---
+
+---
+src: ./pages/outro.md
+---

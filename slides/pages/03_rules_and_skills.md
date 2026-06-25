@@ -11,18 +11,10 @@ layout: default
 
 # What you'll learn
 
-**Rules & files**
-- AGENTS.md / CLAUDE.md files — and what the research says
 - What types of rules there are, how to create them
-- Recommendations
-
-**Repeatable workflows**
-- Commands / workflows / agents that pull rules, skills and tools together
-
-**Skills**
 - What skills are and how they differ from rules
 - How to create your own skill, add supporting scripts, the skills registry
-- Installing safely + the playwright-cli skill
+- Commands / workflows / agents that pull rules, skills and tools together
 
 ---
 layout: cover
@@ -59,12 +51,15 @@ layout: default
 -->
 
 ---
-layout: default
+layout: two-cols
 ---
 
-# What these files look like
+# AGENTS.md files in your context window
+- instruction pasted into every conversation
+- `/init` command in claude code
 
-<SlidevVideo autoplay>
+::right::
+<SlidevVideo autoplay class="w-100 mx-auto">
   <source src="/video/claude-md.webm" type="video/webm" />
 </SlidevVideo>
 
@@ -82,8 +77,8 @@ layout: default
 
 # What the research says
 
-<SlidevVideo autoplay>
-  <source src="/video/agent-files.webm" type="video/webm" />
+<SlidevVideo autoplay class="w-200 mx-auto">
+  <source src="/video/SuccessRateChart.webm" type="video/webm" />
 </SlidevVideo>
 
 <!--
@@ -97,8 +92,8 @@ layout: default
 
 # ...but it depends who wrote it
 
-<SlidevVideo autoplay>
-  <source src="/video/agent-files-decrease.webm" type="video/webm" />
+<SlidevVideo autoplay class="w-200 mx-auto">
+  <source src="/video/BarChart.webm" type="video/webm" />
 </SlidevVideo>
 
 <!--
@@ -117,13 +112,9 @@ layout: default
 
 # My advice
 
-<v-clicks>
-
 - keep the file lean
 - skip the basic stuff
 - include custom conventions
-
-</v-clicks>
 
 <!--
 - my advice
@@ -132,6 +123,13 @@ layout: default
 - It is a place for things like custom project conventions, non-obvious architectural decisions, and business logic quirks.
 - Think about all the things that confuse your new colleagues. Things that you only learn after months of working on a project.
 -->
+
+---
+layout: center
+---
+
+# Demo
+## Creating AGENTS.md file
 
 ---
 layout: default
@@ -306,63 +304,7 @@ layout: default
 layout: cover
 ---
 
-# Part 2 — Repeatable Workflows
-
----
-layout: default
----
-
-# Commands,
-<div class="-mt-8"/>
-
-# Workflows,
-<div class="-mt-8"/>
-
-# Agents
-
-<!-- 
-- I'm grouping these together, because different tools have different names for this
-- essentially I'm talking about repeatable workflows or sets of steps that your agent is able to follow
-- they allow you to combine repeatability with fuzziness of AI
-- commands are one of my favourite use cases for agents, and chances are, if you're doing automation that they will be favourite for you too
--->
-
----
-layout: default
----
-
-<SlidevVideo autoplay>
-  <source src="/video/claude-command.webm" type="video/webm" />
-</SlidevVideo>
-
-<!-- 
-- a typical use case would be - write an end-to-end test for this ticket
-- an agent is able to digest a set of steps, it can pull rules, skills, mcps and all the tools needed together, to complete a certain task
-- they can fire sub-agents to complete partial tasks, e.g. that fetching of the info from a ticket could be a separate task
-- commands or agents pull together all of the things we have talked about
-- one of the things I personally like to do is to let a subagent figure out the react components that I'm interacting with through my e2e tests. if a proper selector is missing, the agent is instructed to add the data-test-id property
--->
-
----
-layout: default
----
-
-<SlidevVideo autoplay>
-  <source src="/video/agent-browser.webm" type="video/webm" />
-</SlidevVideo>
-
-<!-- 
-- the way I usually create agents as command is that I first go with my agent manually
-- when writing an e2e test, I either use playwright-cli, or lately I have been using agent-browser from vercel for this and actually use claude code or cursor to go step by step
-- once I'm happy with all the steps, I tell claude to summarize what we just did into a markdown file
-- that file will then become a blueprint for the repeatable workflow
--->
-
----
-layout: cover
----
-
-# Part 3 — Skills
+# Part 2 — Skills
 
 ---
 layout: center
@@ -477,7 +419,6 @@ npx skills add microsoft/playwright-cli
 npx skills add https://github.com/microsoft/playwright-cli \
   --skill playwright-cli
 ```
-
 </div>
 
 <!--
@@ -568,4 +509,60 @@ and Claude will navigate, interact, and report - without you writing a single li
 It also closes the loop: once Claude has explored the app with playwright-cli,
 it can generate the actual Playwright spec from what it just did.
 
+-->
+
+---
+layout: cover
+---
+
+# Part 3 — Repeatable Workflows
+
+---
+layout: default
+---
+
+# Commands,
+<div class="-mt-8"/>
+
+# Workflows,
+<div class="-mt-8"/>
+
+# Agents
+
+<!-- 
+- I'm grouping these together, because different tools have different names for this
+- essentially I'm talking about repeatable workflows or sets of steps that your agent is able to follow
+- they allow you to combine repeatability with fuzziness of AI
+- commands are one of my favourite use cases for agents, and chances are, if you're doing automation that they will be favourite for you too
+-->
+
+---
+layout: default
+---
+
+<SlidevVideo autoplay>
+  <source src="/video/claude-command.webm" type="video/webm" />
+</SlidevVideo>
+
+<!-- 
+- a typical use case would be - write an end-to-end test for this ticket
+- an agent is able to digest a set of steps, it can pull rules, skills, mcps and all the tools needed together, to complete a certain task
+- they can fire sub-agents to complete partial tasks, e.g. that fetching of the info from a ticket could be a separate task
+- commands or agents pull together all of the things we have talked about
+- one of the things I personally like to do is to let a subagent figure out the react components that I'm interacting with through my e2e tests. if a proper selector is missing, the agent is instructed to add the data-test-id property
+-->
+
+---
+layout: default
+---
+
+<SlidevVideo autoplay>
+  <source src="/video/agent-browser.webm" type="video/webm" />
+</SlidevVideo>
+
+<!-- 
+- the way I usually create agents as command is that I first go with my agent manually
+- when writing an e2e test, I either use playwright-cli, or lately I have been using agent-browser from vercel for this and actually use claude code or cursor to go step by step
+- once I'm happy with all the steps, I tell claude to summarize what we just did into a markdown file
+- that file will then become a blueprint for the repeatable workflow
 -->
